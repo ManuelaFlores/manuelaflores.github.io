@@ -1,6 +1,6 @@
-$background: #202020;
+$background: #14122c;  //#202020;  #14122c
 $foreground: #b3b9c5;
-$accent: #303030;
+$accent: #201b4d;
 $dark-border: darken($background, 3%);
 
 .dark {
@@ -254,7 +254,7 @@ $dark-border: darken($background, 3%);
   }
 
   blockquote {
-    border: 2px solid #393939;
+    border: 2px solid #393939; //393939
     background: rgba(0, 0, 0, 0.2);
 
     p {
@@ -304,11 +304,11 @@ $dark-border: darken($background, 3%);
 
   #{$forms} {
     color: $foreground;
-    border: 2px solid #393939;
-    background: #222 !important;
+    border: 2px solid #383242;  //393939
+    background: #14122c !important;//14122c
 
     &:hover {
-      border: 2px solid #444;
+      border: 2px solid #443c50;
     }
 
     &:active,
@@ -332,7 +332,7 @@ $dark-border: darken($background, 3%);
     &:focus,
     &:active {
       border: 2px solid darken($primary-color, 10%);
-      background: black !important;
+      background: #1d1652 !important;
       color: darken($primary-color, 10%);
     }
   }
@@ -400,7 +400,7 @@ $dark-border: darken($background, 3%);
       }
 
       &:hover {
-        background: #111;
+        background: #0a0a18;
         color: darken($primary-color, 10%);
       }
     }
