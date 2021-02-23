@@ -1,163 +1,71 @@
-import React, { Component } from "react";
-import Helmet from "react-helmet";
-import { graphql } from "gatsby";
-import Layout from "../layout";
-import PostListing from "../components/PostListing";
-import SEO from "../components/seo";
-import config from "../../data/SiteConfig";
+import React from "react"
+import { css } from "@emotion/react"
+import { Link, graphql } from "gatsby"
+import { rhythm } from "../utils/typography"
+import Layout from "../components/layout"
 
-export default class Index extends Component {
-
-  state = {
-    searchTerm: "",
-    currentCategories: [],
-    posts: this.props.data.posts.edges,
-    filteredPosts: this.props.data.posts.edges
-  };
-
-  handleChange = async event => {
-    const { name, value } = event.target;
-
-    await this.setState({ [name]: value });
-
-    this.filterPosts();
-  };
-
-  removeAccents = (str) => {
-    const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-    const accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
-    const splittedStr = str.split('');
-    splittedStr.forEach((letter, index) => {
-      const i = accents.indexOf(letter);
-      if (i !== -1) {
-        splittedStr[index] = accentsOut[i];
-      }
-    })
-    return splittedStr.join('');
-  }
-
-  filterPosts = () => {
-    const { posts, searchTerm, currentCategories } = this.state;
-
-    let filteredPosts = posts.filter(post =>
-      this.removeAccents(post.node.frontmatter.title)
-        .toLowerCase()
-        .includes(this.removeAccents(searchTerm.toLowerCase()))
-    );
-
-    if (currentCategories.length > 0) {
-      filteredPosts = filteredPosts.filter(
-        post =>
-          post.node.frontmatter.categories &&
-          currentCategories.every(cat =>
-            post.node.frontmatter.categories.includes(cat)
-          )
-      );
-    }
-
-    this.setState({ filteredPosts });
-  };
-
-  updateCategories = category => {
-    const { currentCategories } = this.state;
-
-    if (!currentCategories.includes(category)) {
-      this.setState(prevState => ({
-        currentCategories: [...prevState.currentCategories, category]
-      }));
-    } else {
-      this.setState(prevState => ({
-        currentCategories: prevState.currentCategories.filter(
-          cat => category !== cat
-        )
-      }));
-    }
-  };
-
-  render() {
-    const { filteredPosts, searchTerm, currentCategories } = this.state;
-    const filterCount = filteredPosts.length;
-    const categories = this.props.data.categories.group;
-
-    return (
-      <Layout>
-        <Helmet title={`Blog – ${config.siteTitle}`} />
-        <SEO />
-        <div className="container">
-          <div className="category-container">
-            {categories.map(category => {
-              const active = currentCategories.includes(category.fieldValue);
-
-              return (
-                <div
-                  className={`category-filter ${active ? "active" : ""}`}
-                  key={category.fieldValue}
-                  onClick={async () => {
-                    await this.updateCategories(category.fieldValue);
-                    await this.filterPosts();
-                  }}
+export default function Home({ data }) {
+  return (
+    <Layout>
+      <div>
+        <h1
+          css={css`
+            display: inline-block;
+            border-bottom: 1px solid;
+          `}
+        >
+          Amazing Pandas Eating Things
+        </h1>
+        <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
+        {data.allMarkdownRemark.edges.map(({ node }) => (
+          <div key={node.id}>
+            <Link
+              to={node.fields.slug}
+              css={css`
+                text-decoration: none;
+                color: inherit;
+              `}
+            >
+              <h3
+                css={css`
+                  margin-bottom: ${rhythm(1 / 4)};
+                `}
+              >
+                {node.frontmatter.title}{" "}
+                <span
+                  css={css`
+                    color: #555;
+                  `}
                 >
-                  {category.fieldValue}
-                </div>
-              );
-            })}
+                  — {node.frontmatter.date}
+                </span>
+              </h3>
+              <p>{node.excerpt}</p>
+            </Link>
           </div>
-          <div className="search-container">
-            <input
-              className="search"
-              type="text"
-              name="searchTerm"
-              value={searchTerm}
-              placeholder="Escribe aquí para filtrar los posts ..."
-              onChange={this.handleChange}
-            />
-            <div className="filter-count">{filterCount}</div>
-          </div>
-          <PostListing postEdges={filteredPosts} />
-        </div>
-      </Layout>
-    );
-  }
+        ))}
+      </div>
+    </Layout>
+  )
 }
 
-export const pageQuery = graphql`
-  query BlogQuery {
-    posts: allMarkdownRemark(
-      limit: 2000
-      sort: { fields: [fields___date], order: DESC }
-      filter: { frontmatter: { template: { eq: "post" } }, isFuture: { eq: false } }
-    ) {
+export const query = graphql`
+  query {
+    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+      totalCount
       edges {
         node {
-          fields {
-            slug
-            date
-          }
-          excerpt(pruneLength: 180)
-          timeToRead
+          id
           frontmatter {
             title
-            tags
-            categories
-            thumbnail {
-              childImageSharp {
-                fixed(width: 150, height: 150) {
-                  ...GatsbyImageSharpFixed
-                }
-              }
-            }
-            date
-            template
+            date(formatString: "DD MMMM, YYYY")
           }
+          fields {
+            slug
+          }
+          excerpt
         }
       }
     }
-    categories: allMarkdownRemark(limit: 2000) {
-      group(field: frontmatter___categories) {
-        fieldValue
-        totalCount
-      }
-    }
   }
-`;
-
+`

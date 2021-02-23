@@ -1,18 +1,15 @@
-import React, { Component } from 'react'
-import Helmet from 'react-helmet'
-import Layout from '../layout'
-import Contact from '../components/Contact'
-import config from '../../data/SiteConfig'
+import React from "react"
+import {Link} from "gatsby"
+import Header from "../components/header"
+import Layout from "../components/layout"
 
-export default class ContactPage extends Component {
-  render() {
+export default function () {
     return (
       <Layout>
-        <Helmet title={`Contactar – ${config.siteTitle}`} />
-        <div className="container">
-          <Contact />
-        </div>
-      </Layout>
+      <h1>I'd love to talk! Email me at the address below</h1>
+      <p>
+        <a href="mailto:me@example.com">me@example.com</a>
+      </p>
+    </Layout>
     )
-  }
 }

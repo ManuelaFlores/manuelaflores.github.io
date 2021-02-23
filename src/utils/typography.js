@@ -1,9 +1,7 @@
-import Typography from 'typography'
+import Typography from "typography"
+import kirkhamTheme from "typography-theme-kirkham"
 
-const typography = new Typography({
-    baseFontSize: '18px',
-    headerFontFamily: ['Montserrat', 'Arial', 'sans-serif'],
-    bodyFontFamily: ['Inconsolata','Arial', 'sans-serif']
-})
+const typography = new Typography(kirkhamTheme)
 
 export default typography
+export const rhythm = typography.rhythm

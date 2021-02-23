@@ -1,0 +1,17 @@
+html {
+    background-color: rgb(247, 247, 244);
+  }
+
+.nav {
+  color: #343A3F;
+  text-decoration: none;
+}
+.nav:hover{
+  background-color:  rgb(194, 194, 186);
+  border-radius: 10px;
+}
+
+.brand{
+  color: #362d72;
+}
+
