@@ -56,22 +56,22 @@ export default function Header() {
           `}
         >
           <Link
-            to={`/about/`}
+            to={`/aboutMe/`}
             css={css`
               padding: 0.75rem 1.25rem;
             `}
             className="nav"
           >
-            About me
+            About
           </Link>
           <Link
-            to={`/about/`}
+            to={`/articles/`}
             css={css`
               padding: 0.75rem 1.25rem;
             `}
             className="nav"
           >
-            Blog
+            Articles
           </Link>
           <Link
             to={`/contact/`}
