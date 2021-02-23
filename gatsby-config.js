@@ -15,8 +15,12 @@ module.exports = {
         name: `posts`,
         path: `${__dirname}/content/`,
       },
+    }, {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        maxWidth: 600,
+      },
     },
-    `gatsby-transformer-remark`,
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
