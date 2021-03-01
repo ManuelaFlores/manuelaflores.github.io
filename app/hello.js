@@ -1,6 +1,3 @@
----
-to: app/hello.js
----
 const hello = ```
 Hello!
 This is your first hygen template.
