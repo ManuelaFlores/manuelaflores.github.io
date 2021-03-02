@@ -1,8 +1,8 @@
-import React from "react"
-import { css } from "@emotion/react"
-import { Link, graphql } from "gatsby"
-import { rhythm } from "../utils/typography"
-import Layout from "../components/layout"
+import React from "react";
+import { css } from "@emotion/react";
+import { Link, graphql } from "gatsby";
+import { rhythm } from "../utils/typography";
+import Layout from "../components/layout";
 
 export default function Home({ data }) {
   return (
@@ -46,12 +46,15 @@ export default function Home({ data }) {
         ))}
       </div>
     </Layout>
-  )
+  );
 }
 
 export const query = graphql`
   query {
-    allMarkdownRemark(sort: {order: DESC, fields: [frontmatter___date]}, filter: {frontmatter: {categories: {in: "development"}}}) {
+    allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date] }
+      filter: { frontmatter: { categories: { in: "development" } } }
+    ) {
       totalCount
       edges {
         node {
@@ -68,4 +71,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

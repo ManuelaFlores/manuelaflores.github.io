@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
     "@sindresorhus/slugify": "^1.1.0",
     "gatsby": "^2.26.1",
     "gatsby-plugin-emotion": "^5.4.0",
